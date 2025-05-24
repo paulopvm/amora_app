@@ -109,9 +109,19 @@ class _MainTabScreenState extends State<MainTabScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Amora'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Funcionalidade em desenvolvimento!'),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          },
+        ),
       ),
       body: PageView(
         controller: _pageController,
