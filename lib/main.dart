@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 import 'screens/diary_screen.dart';
 import 'screens/game_screen.dart';
+import 'screens/pet_screen.dart';
 import 'screens/settings_screen.dart';
 import 'utils/calendar_utils.dart';
 
@@ -65,6 +66,7 @@ class _MainTabScreenState extends State<MainTabScreen> {
     const HomeScreen(),
     const DiaryScreen(),
     const GameScreen(),
+    const PetScreen(),
     const SettingsScreen(),
   ];
   
@@ -73,6 +75,7 @@ class _MainTabScreenState extends State<MainTabScreen> {
     Icons.favorite,
     Icons.book,
     Icons.quiz,
+    Icons.pets,
     Icons.settings,
   ];
 
