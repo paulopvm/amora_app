@@ -1,16 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'screens/home_screen.dart';
 import 'screens/diary_screen.dart';
 import 'screens/game_screen.dart';
 import 'screens/pet_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/splash_screen.dart';
+import 'services/auth_service.dart';
 import 'utils/calendar_utils.dart';
 
 /// Aplicativo Amora - Ponto de entrada principal do aplicativo
 void main() async {
+  // Garantir que o Flutter esteja inicializado
+  WidgetsFlutterBinding.ensureInitialized();
+  
   // Inicializar locale para o calendário
   await initializeCalendarLocale();
-  runApp(const AmoraApp());
+  
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AuthService(),
+      child: const AmoraApp(),
+    ),
+  );
 }
 
 /// Widget raiz do aplicativo Amora
@@ -21,6 +34,8 @@ class AmoraApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    
     return MaterialApp(
       title: 'Amora',
       debugShowCheckedModeBanner: false,
@@ -31,17 +46,32 @@ class AmoraApp extends StatelessWidget {
         ),
         useMaterial3: true,
         fontFamily: 'Roboto',
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
       darkTheme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF8E44AD),
+          seedColor: const Color(0xFF8E44AD), // Cor roxa similar à amora
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
         fontFamily: 'Roboto',
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
       ),
       themeMode: ThemeMode.system,
-      home: const MainTabScreen(),
+      // Verificar estado de autenticação
+      home: authService.isLoading
+          ? const SplashScreen() // Tela de carregamento
+          : authService.isAuthenticated
+              ? const MainTabScreen() // Usuário autenticado
+              : const SplashScreen(), // Usuário não autenticado
     );
   }
 }

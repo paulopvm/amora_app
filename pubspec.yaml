@@ -38,6 +38,13 @@ dependencies:
   # Calendário e manipulação de datas
   table_calendar: ^3.0.9
   intl: ^0.19.0
+  
+  # Gerenciamento de estado
+  provider: ^6.1.1
+  
+  # Armazenamento seguro para autenticação
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:
